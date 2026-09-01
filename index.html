@@ -53,6 +53,7 @@
     overflow: hidden;
     box-shadow: 0 4px 24px rgba(0,0,0,0.4);
     cursor: grab;
+    touch-action: none; /* stop touch-drag from panning/scrolling the page while orbiting the plot */
   }
   #plot-container.dragging { cursor: grabbing; }
   #plot-container canvas { display: block; }

@@ -405,6 +405,7 @@
   let lastPointerX = 0, lastPointerY = 0;
 
   container.addEventListener('pointerdown', function (e) {
+    e.preventDefault(); // belt-and-suspenders alongside touch-action:none in CSS
     isDragging = true;
     lastPointerX = e.clientX;
     lastPointerY = e.clientY;
