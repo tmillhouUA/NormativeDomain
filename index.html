@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Identifying Normative Categories</title>
+<style>
+  :root {
+    --bg: #1b1d23;
+    --panel: #26282f;
+    --text: #e8e8ec;
+    --accent: #6ea8fe;
+    --box-bg: #101114;
+  }
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden;
+  }
+  #app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+  h1 {
+    margin: 0 0 10px 0;
+    font-size: 1.4em;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    flex: 0 0 auto;
+  }
+  /* Plot area is a square that fills remaining vertical space, minus room for controls */
+  #plot-wrap {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #plot-container {
+    position: relative;
+    background: var(--box-bg);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    cursor: grab;
+  }
+  #plot-container.dragging { cursor: grabbing; }
+  #plot-container canvas { display: block; }
+  .axis-label {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    font-size: 0.8em;
+    font-weight: 600;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    white-space: nowrap;
+  }
+
+  #controls {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 1080px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;
+    gap: 16px;
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: var(--panel);
+    border-radius: 12px;
+    box-sizing: border-box;
+    align-items: end;
+  }
+  .control {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.85em;
+  }
+  .control label {
+    display: flex;
+    justify-content: space-between;
+    color: #b8b9c0;
+  }
+  .control input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent);
+  }
+  .control select {
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid #3a3c44;
+    border-radius: 6px;
+    padding: 5px 6px;
+    font-size: 0.95em;
+  }
+  #k-value { color: var(--text); font-weight: 600; }
+
+  #resample-btn {
+    background: var(--accent);
+    color: #14151a;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 16px;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  #resample-btn:hover { filter: brightness(1.08); }
+  #resample-btn:active { filter: brightness(0.94); }
+
+  @media (max-width: 700px) {
+    #controls { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>Identifying Normative Categories</h1>
+  <div id="plot-wrap">
+    <div id="plot-container"></div>
+  </div>
+  <div id="controls">
+    <div class="control">
+      <label for="k-slider">Number of Clusters <span id="k-value">3</span></label>
+      <input type="range" id="k-slider" min="1" max="9" step="1" value="3">
+    </div>
+    <div class="control">
+      <label for="sep-slider">Cluster Separation</label>
+      <input type="range" id="sep-slider" min="0" max="100" step="1" value="45">
+    </div>
+    <div class="control">
+      <label for="var-slider">Cluster Variance</label>
+      <input type="range" id="var-slider" min="0" max="100" step="1" value="30">
+    </div>
+    <div class="control">
+      <label for="color-mode">Color Coding</label>
+      <select id="color-mode">
+        <option value="none">None</option>
+        <option value="cluster">Cluster</option>
+        <option value="position">Position</option>
+      </select>
+    </div>
+    <button id="resample-btn" type="button">Resample</button>
+  </div>
+</div>
+
+<script src="lib/three.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
