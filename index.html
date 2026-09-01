@@ -13,15 +13,17 @@
     --box-bg: #101114;
   }
   html, body {
-    height: 100%;
     margin: 0;
     background: var(--bg);
     color: var(--text);
     font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-    overflow: hidden;
+    overflow-x: hidden; /* no explicit height/overflow-y: body sizes to its content
+                           (normally exactly one viewport tall) and the page scrolls
+                           natively on the rare device where that content doesn't fit */
   }
   #app {
-    height: 100vh;
+    min-height: 100vh;
+    min-height: 100dvh; /* actual visible height on mobile, excluding the browser's address/toolbar */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -118,11 +120,22 @@
   #resample-btn:active { filter: brightness(0.94); }
 
   @media (max-width: 700px) {
+    #app { padding: 8px; }
+    h1 { margin: 0 0 6px 0; font-size: 1.15em; }
     #controls {
-      grid-template-columns: 1fr;
-      align-items: stretch;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 12px;
+      margin-top: 8px;
+      padding: 10px 12px;
     }
-    #resample-btn { width: 100%; padding: 10px 16px; }
+    /* Sliders each get their own full-width row; Color Coding and Resample
+       share the last row instead of each taking one of their own. */
+    #controls > .control:nth-child(1),
+    #controls > .control:nth-child(2),
+    #controls > .control:nth-child(3) {
+      grid-column: 1 / -1;
+    }
+    #resample-btn { width: 100%; padding: 10px 12px; }
   }
 </style>
 </head>
