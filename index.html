@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Identifying Normative Categories</title>
 <style>
   :root {
@@ -117,7 +118,11 @@
   #resample-btn:active { filter: brightness(0.94); }
 
   @media (max-width: 700px) {
-    #controls { grid-template-columns: repeat(2, 1fr); }
+    #controls {
+      grid-template-columns: 1fr;
+      align-items: stretch;
+    }
+    #resample-btn { width: 100%; padding: 10px 16px; }
   }
 </style>
 </head>
